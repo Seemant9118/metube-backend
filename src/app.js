@@ -1,4 +1,4 @@
-import exprees from 'express';
+import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -15,8 +15,14 @@ app.use(express.json({ limit: '20kb' }));
 
 app.use(express.urlencoded({ extended: true, limit: '20kb' }));
 
-app.use(static('public'));
+app.use(express.static('public'));
 
 app.use(cookieParser());
+
+
+// routes
+import userRoutes from './modules/user/user.route.js';
+
+app.use('/api/v1/users', userRoutes); // endpoint : http://localhost:5000/api/v1/users/xxxxx
 
 export default app;
