@@ -10,13 +10,13 @@ import fs from 'fs';
     });
 })();
 
-const uploadToCloudinary = async (filePath) => {
+const uploadToCloudinary = async (localFilePath) => {
     try {
-        if (!filePath) {
+        if (!localFilePath) {
             throw new Error('File path is required for upload.');
         }
         // upload the file to Cloudinary
-        const response = await cloudinary.uploader.upload(filePath, {
+        const response = await cloudinary.uploader.upload(localFilePath, {
             resource_type: 'auto', // this will automatically detect the file type (image, video, etc.)
             folder: 'metube', // optional: specify a folder in your Cloudinary account
         });
@@ -26,7 +26,7 @@ const uploadToCloudinary = async (filePath) => {
 
         return response;
     } catch (error) {
-        fs.unlinkSync(filePath); // remove the file from local storage if upload fails
+        fs.unlinkSync(localFilePath); // remove the file from local storage if upload fails
         console.error('Error uploading to Cloudinary:', error);
         throw error;
     }
